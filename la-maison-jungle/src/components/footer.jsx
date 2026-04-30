@@ -1,6 +1,6 @@
 /*************************************************************************************************/
 /**                                                                                             **/
-/**   Footer.jsx est un composant React qui affiche le pied de page du site.                  **/
+/**   Footer.jsx est un composant qui affiche le pied de page du site.                  **/
 /**   Il contient un formulaire pour laisser son mail.                                         **/
 /**                                                                                             **/
 /*************************************************************************************************/

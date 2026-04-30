@@ -1,6 +1,6 @@
 /*************************************************************************************************/
 /**                                                                                             **/
-/**   Banner.jsx est un composant React qui affiche une bannière avec un titre                 **/
+/**   Banner.jsx est un composant qui affiche une bannière avec un titre                       **/
 /**   et un slogan pour le site "La Maison Jungle".                                            **/
 /**   Il utilise des classes CSS pour le style, qui sont définies dans un fichier CSS séparé.  **/
 /**   Le composant est simple et statique, il ne prend pas de props ni n'utilise d'état local. **/
@@ -16,11 +16,14 @@ const Banner = (props) => {
     /* On reçoit les props envoyées depuis App.jsx */
     return (
         <div className="banner">
-            {/* On affiche le titre principal */}
-            <h1 className="banner-title">{props.title}</h1>
-            {/* On affiche le slogan */}
-            <p className="banner-content">{props.slogan}</p>
-            {/* On affiche le logo avec l'icône et le nom */}
+            {/* On regroupe le titre et le slogan dans une div à gauche */}
+            <div className="banner-left">
+                {/* On affiche le titre principal */}
+                <h1 className="banner-title">{props.title}</h1>
+                {/* On affiche le slogan juste en dessous du titre */}
+                <p className="banner-content">{props.slogan}</p>
+            </div>
+            {/* On affiche le logo avec l'icône et le nom à droite */}
             <div className="banner-logo">
                 <GiLeafSwirl color="green" size={40} />
                 <span>La maison jungle</span>

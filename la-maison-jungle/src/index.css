@@ -1,0 +1,39 @@
+/*************************************************************************************************/
+/**                                                                                             **/
+/**   index.css est le fichier CSS global de toute l'application "La Maison Jungle".           **/
+/**   Il s'applique à tous les composants sans exception.                                       **/
+/**   Il définit la couleur de fond, la police et les marges par défaut.                       **/
+/**                                                                                             **/
+/*************************************************************************************************/
+
+body {
+    background-color: #f0f7f0;
+    /* La couleur de fond de toute la page */
+    color: #1a1a1a;
+    /* La couleur du texte par défaut */
+    font-family: Arial, sans-serif;
+    /* La police d'écriture par défaut */
+    margin: 0;
+    /* On supprime les marges par défaut du navigateur */
+    padding: 0;
+    /* On supprime les espacements par défaut du navigateur */
+}
+
+* {
+    box-sizing: border-box;
+    /* Le * veut dire "tous les éléments"
+       border-box signifie que le padding et la bordure
+       sont inclus dans la largeur totale de l'élément */
+}
+
+
+.footer {
+    text-align: center;
+    /* On centre le texte du footer */
+    padding: 20px;
+    /* On ajoute de l'espace autour du texte */
+    background-color: #fff;
+    /* Le fond du footer devient blanc */
+    border-top: 3px solid #4CAF50;
+    /* On ajoute une bordure verte en haut du footer */
+}
