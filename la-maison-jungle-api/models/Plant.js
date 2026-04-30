@@ -28,6 +28,12 @@ const Plant = sequelize.define('Plant', {
         /* L'image est le nom du fichier */
         allowNull: true
         /* L'image est optionnelle */
+    },
+    care: {
+        type: DataTypes.INTEGER,
+        /* Le niveau d'entretien est un nombre entre 1 et 3 */
+        allowNull: true
+        /* Le niveau d'entretien est optionnel */
     }
 })
 

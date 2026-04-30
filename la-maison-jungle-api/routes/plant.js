@@ -46,12 +46,12 @@ router.get('/', async (req, res) => {
 /**   une nouvelle plante avec son image dans la base de données                              **/
 /*************************************************************************************************/
 router.post('/', upload.single('image'), async (req, res) => {
-    /* On récupère le nom et le prix envoyés */
-    const { name, price } = req.body
+    /* On récupère le nom, le prix et le niveau d'entretien envoyés */
+    const { name, price, care } = req.body
     /* On récupère le nom du fichier uploadé par multer */
     const image = req.file.originalname
-    /* On crée la plante avec l'image */
-    const plant = await Plant.create({ name, price, image })
+    /* On crée la plante avec l'image et le niveau d'entretien */
+    const plant = await Plant.create({ name, price, image, care })
     /* On envoie la plante créée en JSON */
     res.json(plant)
 })
@@ -61,21 +61,22 @@ router.post('/', upload.single('image'), async (req, res) => {
 /**   une plante existante dans la base de données                                             **/
 /*************************************************************************************************/
 router.put('/:id', upload.single('image'), async (req, res) => {
-    /* On récupère l'ID dans l'URL */
     const id = req.params.id
-    /* On récupère le nom et le prix envoyés */
-    const { name, price } = req.body
-    /* On récupère le nom du fichier uploadé par multer */
-    const image = req.file ? req.file.originalname : null
+    const { name, price, care } = req.body
+    
+    /* On construit l'objet de mise à jour */
+    const updateData = { name, price, care }
+    
+    /* On ajoute l'image seulement si une nouvelle est envoyée */
+    if (req.file) {
+        updateData.image = req.file.originalname
+    }
+    
     /* On met à jour la plante */
-    await Plant.update(
-        { name, price, image },
-        { where: { id } }
-    )
-    /* On envoie un message de confirmation */
+    await Plant.update(updateData, { where: { id } })
+    
     res.json({ message: 'Plante mise à jour !' })
 })
-
 /*************************************************************************************************/
 /**   Quand quelqu'un arrive sur DELETE "/plants/:id", cette fonction supprime                 **/
 /**   une plante de la base de données                                                         **/
