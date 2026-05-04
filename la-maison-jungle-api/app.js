@@ -11,6 +11,8 @@ const multer = require('multer')
 /* On importe multer pour gérer les uploads d'images */
 const sequelize = require('./config/database')
 const Plant = require('./models/Plant')
+const User = require('./models/User')
+/* On importe le modèle User pour créer la table dans la base de données */
 
 require('dotenv').config()
 
@@ -30,7 +32,6 @@ const storage = multer.diskStorage({
 
 /* On exporte upload pour l'utiliser dans les routes */
 const upload = multer({ storage })
-module.exports.upload = upload
 
 /* On autorise React à communiquer avec notre API */
 app.use(cors())
@@ -44,6 +45,10 @@ app.use(express.static('public'))
 const plantRouter = require('./routes/plant')
 /* On utilise la route plant */
 app.use('/plants', plantRouter)
+
+const authRouter = require('./routes/auth')
+/* On importe la route auth */
+app.use('/auth', authRouter)
 
 /* On synchronise la base de données et on démarre le serveur */
 sequelize.sync({ force: false })
