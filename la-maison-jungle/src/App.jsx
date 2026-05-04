@@ -7,12 +7,16 @@
 /*************************************************************************************************/
 
 import { useState, useEffect } from 'react'
-/* On importe les Hooks useState et useEffect depuis React
-   - useState : permet de créer des variables réactives
-   - useEffect : permet d'exécuter du code au chargement du composant */
+/* On importe les Hooks useState et useEffect depuis React */
+
+import { Routes, Route } from 'react-router-dom'
+/* On importe Routes et Route pour gérer la navigation */
 
 import './App.css'
 /* On importe le fichier CSS global de l'application */
+
+import Navbar from './components/Navbar'
+/* On importe le composant Navbar */
 
 import Banner from './components/Banner'
 /* On importe le composant Banner depuis le dossier components */
@@ -26,98 +30,120 @@ import Footer from './components/Footer'
 import Cart from './components/Cart'
 /* On importe le composant Cart depuis le dossier components */
 
-/************************************************************************************* */
-/**    ICI JE CONFIGURE LA ROUTE POUR RECUPÉRER LES PLANTES                          */
-/**    DANS MA BASES DE DONNÉES                                                        */
-/************************************************************************************ */
+import Register from './components/Register'
+/* On importe le composant Register depuis le dossier components */
+
+import Login from './components/Login'
+/* On importe le composant Login */
+
+import Welcome from './components/Welcome'
+/* On importe le composant Welcome */
+
+import LandingPage from './components/LandingPage'
+/* On importe le composant LandingPage */
 
 function App() {
-  /* Hook useState : on crée une variable réactive "plants" qui commence vide []
-     setPlants est la fonction qui permet de modifier cette variable */
+  /* On crée un état pour stocker les plantes récupérées depuis l'API */
   const [plants, setPlants] = useState([])
 
-  /* Hook useState : on crée une variable réactive "cart" pour stocker le panier
-     Le panier commence vide [] */
+  /* On crée un état pour stocker les plantes du panier */
   const [cart, setCart] = useState([])
 
-  /* Hook useState : on crée une variable réactive "showCart" pour afficher/cacher le panier
-     false = caché par défaut */
+  /* On crée un état pour afficher ou cacher le panier */
   const [showCart, setShowCart] = useState(false)
 
-  /* Hook useEffect : ce code s'exécute une seule fois au chargement de la page
-     Le [] à la fin signifie "ne fais ça qu'une seule fois" */
+  /* On crée un état pour stocker l'utilisateur connecté
+     null = personne n'est connecté */
+  const [user, setUser] = useState(null)
+
+  /* Au chargement de la page on récupère les plantes depuis l'API */
   useEffect(() => {
     fetch('http://localhost:3000/plants')
-      /* fetch envoie une requête HTTP GET à notre API Express */
       .then((response) => response.json())
-      /* On convertit la réponse en JSON */
       .then((data) => {
-        /* On stocke les plantes dans notre état avec setPlants
-           React va automatiquement re-rendre le composant */
+        /* On stocke les plantes dans notre état */
         setPlants(data)
       })
   }, [])
 
-  /* Gestionnaire d'événement : fonction qui ajoute une plante au panier
-     Le Spread Operator "..." copie toutes les plantes déjà dans le panier
-     et ajoute la nouvelle plante à la fin */
+  /* On ajoute une plante au panier */
   const addToCart = (plant) => {
     setCart([...cart, plant])
   }
 
-  /* Gestionnaire d'événement : fonction qui vide le panier
-     On remet simplement le panier à vide [] */
+  /* On vide le panier */
   const clearCart = () => {
     setCart([])
   }
 
-  /* Méthode de tableau reduce() : elle itère sur chaque plante du panier
-     et accumule les prix pour calculer le total
-     acc = accumulateur qui commence à 0
-     plant.price = le prix de chaque plante */
+  /* On déconnecte l'utilisateur */
+  const handleLogout = () => {
+    setUser(null)
+    /* On remet user à null */
+  }
+
+  /* On calcule le total du panier */
   const total = cart.reduce((acc, plant) => acc + plant.price, 0)
 
   return (
     <>
-      {/* On affiche la bannière en haut de la page */}
-      <Banner title="La maison jungle" slogan="Chez vous, partout et ailleurs" />
+      {/* On affiche la navbar sur toutes les pages
+          On passe user et handleLogout en props */}
+      <Navbar user={user} onLogout={handleLogout} />
 
-      {/* Callback : on passe une fonction fléchée à onClick
-          qui met showCart à true pour afficher le panier
-          cart.length affiche le nombre de plantes dans le panier */}
-      <button onClick={() => setShowCart(true)}>🛒 Panier ({cart.length})</button>
+      {/* On définit les routes de l'application */}
+      <Routes>
 
-      {/* Rendu Conditionnel : si showCart est true on affiche le Cart
-          on passe les props : cart, total, onClose (callback) et onClear (callback) */}
-      {showCart && (
-        <Cart
-          cart={cart}
-          total={total}
-          onClose={() => setShowCart(false)}
-          /* Callback : ferme le panier en mettant showCart à false */
-          onClear={clearCart}
-          /* Callback : vide le panier en appelant clearCart */
-        />
-      )}
+        {/* Route principale : Rendu Conditionnel
+            Si user est connecté → on affiche les plantes
+            Si user n'est pas connecté → on affiche la landing page */}
+        <Route path="/" element={
+          user ? (
+            <>
+              {/* On affiche la bannière en haut de la page */}
+              <Banner title="La maison jungle" slogan="Chez vous, partout et ailleurs" />
+              {/* Bouton pour ouvrir le panier */}
+              <button onClick={() => setShowCart(true)}>🛒 Panier ({cart.length})</button>
+              {/* Rendu conditionnel : on affiche le panier si showCart est true */}
+              {showCart && (
+                <Cart
+                  cart={cart}
+                  total={total}
+                  onClose={() => setShowCart(false)}
+                  onClear={clearCart}
+                />
+              )}
+              {/* On affiche la liste des plantes */}
+              <div className="shopping-list">
+                {plants.map((plant) => (
+                  <PlantItem
+                    key={plant.id}
+                    name={plant.name}
+                    price={plant.price}
+                    image={plant.image}
+                    care={plant.care}
+                    onAdd={() => addToCart(plant)}
+                  />
+                ))}
+              </div>
+              <Footer />
+            </>
+          ) : (
+            /* Si pas connecté on affiche la landing page */
+            <LandingPage />
+          )
+        } />
 
-      {/* Méthode map() : on itère sur chaque plante et on crée un PlantItem
-          onAdd est un callback qui appelle addToCart avec la plante concernée */}
-      <div className="shopping-list">
-        {plants.map((plant) => (
-          <PlantItem
-            key={plant.id}
-            name={plant.name}
-            price={plant.price}
-            image={plant.image}
-            care={plant.care}
-            onAdd={() => addToCart(plant)}
-            /* Callback : ajoute la plante au panier quand on clique sur Ajouter */
-          />
-        ))}
-      </div>
+        {/* Route inscription */}
+        <Route path="/register" element={<Register />} />
 
-      {/* On affiche le footer en bas de la page */}
-      <Footer />
+        {/* Route connexion : on passe setUser pour stocker l'utilisateur connecté */}
+        <Route path="/login" element={<Login setUser={setUser} />} />
+
+        {/* Route bienvenue */}
+        <Route path="/welcome" element={<Welcome />} />
+
+      </Routes>
     </>
   )
 }
