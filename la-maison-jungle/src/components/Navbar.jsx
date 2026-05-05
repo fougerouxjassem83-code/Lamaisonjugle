@@ -18,8 +18,12 @@ const Navbar = (props) => {
                 {/* Rendu conditionnel : si user est connecté on affiche son nom */}
                 {props.user ? (
                     <>
+                        {/* Bouton panier dans la navbar */}
+                        <button className="navbar-cart" onClick={props.onCartOpen}>
+                            🛒 Panier ({props.cartCount})
+                        </button>
                         {/* On affiche le nom de l'utilisateur connecté */}
-                        <span className="navbar-user"> Bonjour {props.user} !</span>
+                        <span className="navbar-user">👋 Bonjour {props.user} !</span>
                         {/* Bouton de déconnexion */}
                         <button onClick={props.onLogout}>Se déconnecter</button>
                     </>

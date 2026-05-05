@@ -88,8 +88,13 @@ function App() {
   return (
     <>
       {/* On affiche la navbar sur toutes les pages
-          On passe user et handleLogout en props */}
-      <Navbar user={user} onLogout={handleLogout} />
+          On passe user, handleLogout, cartCount et onCartOpen en props */}
+      <Navbar
+        user={user}
+        onLogout={handleLogout}
+        cartCount={cart.length}
+        onCartOpen={() => setShowCart(true)}
+      />
 
       {/* On définit les routes de l'application */}
       <Routes>
@@ -102,8 +107,7 @@ function App() {
             <>
               {/* On affiche la bannière en haut de la page */}
               <Banner title="La maison jungle" slogan="Chez vous, partout et ailleurs" />
-              {/* Bouton pour ouvrir le panier */}
-              <button onClick={() => setShowCart(true)}>🛒 Panier ({cart.length})</button>
+
               {/* Rendu conditionnel : on affiche le panier si showCart est true */}
               {showCart && (
                 <Cart
@@ -113,6 +117,7 @@ function App() {
                   onClear={clearCart}
                 />
               )}
+
               {/* On affiche la liste des plantes */}
               <div className="shopping-list">
                 {plants.map((plant) => (

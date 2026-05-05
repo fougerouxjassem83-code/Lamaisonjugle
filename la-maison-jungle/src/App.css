@@ -6,34 +6,104 @@
 /*************************************************************************************************/
 
 /************************************************************************************* */
+/**   ici je vais mettre ma navbar css                                              **/
+/************************************************************************************* */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #4CAF50;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar-links a {
+    background-color: white;
+    color: #4CAF50;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.navbar-links a:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar-cart {
+    background-color: white;
+    color: #4CAF50;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.navbar-cart:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar-user {
+    color: white;
+    font-weight: bold;
+    animation: float 2s ease-in-out infinite;
+}
+
+.navbar button {
+    background-color: white;
+    color: #4CAF50;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.navbar button:hover {
+    background-color: #f0f0f0;
+}
+
+/************************************************************************************* */
 /**   ici je vais mettre ma bannière css                                              **/
 /************************************************************************************* */
 .banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 25px 40px;
     background-color: #fff;
     border-bottom: 3px solid #4CAF50;
-    /* On ajoute une bordure verte en bas de la bannière */
+    box-shadow: 0 2px 10px rgba(76, 175, 80, 0.1);
 }
 
 .banner-left {
     display: flex;
     flex-direction: column;
-    /* On met le titre et le slogan en colonne */
 }
 
 .banner-title {
     margin: 0;
-    /* On supprime les marges par défaut du titre */
+    font-size: 32px;
+    color: #2d6a4f;
 }
 
 .banner-content {
     margin: 0;
-    /* On supprime les marges par défaut du slogan */
     color: grey;
-    /* On met le slogan en gris */
+    font-size: 16px;
 }
 
 .banner-logo {
@@ -42,6 +112,7 @@
     gap: 10px;
     font-weight: bold;
     color: black;
+    font-size: 18px;
 }
 
 /******************************************************************************/
@@ -49,50 +120,62 @@
 /******************************************************************************/
 .plant-item {
     position: relative;
-    width: 200px;
-    border-radius: 10px;
+    width: 250px;
+    border-radius: 15px;
     overflow: hidden;
     background-color: white;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
-    /* On ajoute une ombre verte autour des cartes */
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    transition: transform 0.2s;
+    /* Animation au survol */
+}
+
+.plant-item:hover {
+    transform: scale(1.03);
+    /* On agrandit légèrement la carte au survol */
 }
 
 .plant-item img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border-radius: 10px;
 }
 
+.plant-item h2 {
+    font-size: 20px;
+    color: #2d6a4f;
+    margin: 10px 0 5px 0;
+}
+
 .plant-item-price {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     background-color: #4CAF50;
-    /* Le badge prix devient vert */
     border-radius: 20px;
-    padding: 5px 10px;
+    padding: 5px 12px;
     font-weight: bold;
     color: white;
-    /* Le texte devient blanc */
+    font-size: 14px;
 }
 
 .plant-item-button {
     margin-top: 10px;
-    padding: 5px 15px;
+    padding: 8px 20px;
     background-color: #4CAF50;
-    /* Le bouton devient vert */
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     color: white;
-    /* Le texte devient blanc */
+    font-weight: bold;
+    font-size: 14px;
+    width: 100%;
+    /* Le bouton prend toute la largeur */
 }
 
 .plant-item-button:hover {
     background-color: #388E3C;
-    /* Le bouton devient plus foncé au survol */
 }
 
 /******************************************************************************/
@@ -101,8 +184,8 @@
 .shopping-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
+    gap: 25px;
+    padding: 30px 40px;
     justify-content: center;
 }
 
@@ -112,15 +195,15 @@
 .cart {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 250px;
+    right: 0;
+    /* On met le panier à droite */
+    width: 300px;
     height: 100%;
     background-color: #4CAF50;
     color: white;
-    padding: 20px;
+    padding: 30px 20px;
     z-index: 100;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-    /* On ajoute une ombre à droite du panier */
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .cart h2 {
@@ -135,56 +218,27 @@
 
 .cart li {
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .cart button {
     margin-top: 20px;
-    padding: 8px 15px;
-}
-
-
-/************************************************************************/
-/**   ici je vais mettre ma navbar css                                 **/
-/************************************************************************/
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    /* Fond vert */
-}
-
-.navbar a {
-    color: white;
-    /* Liens en blanc */
-    text-decoration: none;
-    /* On supprime le soulignement */
-    font-weight: bold;
-}
-
-.navbar-links {
-    display: flex;
-    gap: 20px;
-    /* Espace entre les liens */
-}
-
-.navbar-links a {
     background-color: white;
     color: #4CAF50;
-    /* Texte vert */
-    padding: 8px 15px;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
 }
 
-.navbar-links a:hover {
+.cart button:hover {
     background-color: #f0f0f0;
-    /* Fond gris au survol */
 }
-
 
 /************************************************************************/
-/**   ici je vais mettre mon formulaire d'inscription css              **/
+/**   ici je vais mettre le style du formulaire d'inscription css      **/
 /************************************************************************/
 .register {
     display: flex;
@@ -203,25 +257,24 @@
 
 .register input {
     width: 300px;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border: 2px solid #4CAF50;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     outline: none;
 }
 
 .register input:focus {
     border-color: #388E3C;
-    /* La bordure devient plus foncée quand on clique */
 }
 
 .register button {
     width: 300px;
-    padding: 10px 15px;
+    padding: 12px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     font-weight: bold;
@@ -235,47 +288,6 @@
     color: #4CAF50;
     font-weight: bold;
 }
-
-
-/************************************************************************/
-/**   ici je vais mettre le style de l'utilisateur connecté           **/
-/************************************************************************/
-.navbar-user {
-    color: white;
-    font-weight: bold;
-    animation: float 2s ease-in-out infinite;
-    /* On applique l'animation float en boucle */
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-        /* Position de départ */
-    }
-    50% {
-        transform: translateY(-5px);
-        /* On monte de 5px */
-    }
-    100% {
-        transform: translateY(0px);
-        /* On revient à la position de départ */
-    }
-}
-
-.navbar button {
-    background-color: white;
-    color: #4CAF50;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.navbar button:hover {
-    background-color: #f0f0f0;
-}
-
 
 /************************************************************************/
 /**   ici je vais mettre le style de la page de bienvenue             **/
@@ -294,7 +306,6 @@
     font-size: 36px;
     color: #4CAF50;
     animation: float 2s ease-in-out infinite;
-    /* On applique l'animation float */
 }
 
 .welcome p {
@@ -312,7 +323,6 @@
     cursor: pointer;
     font-weight: bold;
     animation: float 2s ease-in-out infinite;
-    /* On applique l'animation float au bouton */
 }
 
 .welcome button:hover {
@@ -326,24 +336,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* On centre la carte */
     height: 100vh;
     background-size: cover;
-    /* L'image couvre tout l'écran sans se répéter */
     background-position: center;
-    /* L'image est centrée */
     background-repeat: no-repeat;
-    /* On empêche l'image de se répéter */
 }
 
 .landing-content {
     text-align: center;
     color: white;
-    padding: 40px;
+    padding: 50px 40px;
     background-color: rgba(0, 0, 0, 0.6);
-    /* Fond semi-transparent */
     border-radius: 20px;
-    /* On supprime le margin-left pour centrer la carte */
     animation: float 3s ease-in-out infinite;
 }
 
@@ -371,36 +375,40 @@
     justify-content: center;
 }
 
+
+/* les boutons de la landing page */
 .landing-btn-primary {
     padding: 15px 30px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border: none !important;
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.2s;
+    width: auto !important;
 }
 
 .landing-btn-primary:hover {
     transform: scale(1.05);
-    background-color: #388E3C;
+    background-color: #388E3C !important;
 }
 
 .landing-btn-secondary {
     padding: 15px 30px;
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
+    background-color: transparent !important;
+    color: white !important;
+    border: 2px solid white !important;
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.2s;
+    width: auto !important;
 }
 
 .landing-btn-secondary:hover {
     transform: scale(1.05);
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }

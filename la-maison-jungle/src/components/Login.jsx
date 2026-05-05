@@ -26,6 +26,8 @@ const Login = (props) => {
         })
         .then((response) => response.json())
         .then((data) => {
+            /* On affiche les données reçues dans la console pour déboguer */
+            console.log('data reçu :', data)
             if (data.message === 'Connexion réussie !') {
                 /* On stocke l'utilisateur connecté dans App.jsx via props */
                 props.setUser(data.username)
