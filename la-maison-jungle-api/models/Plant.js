@@ -34,6 +34,12 @@ const Plant = sequelize.define('Plant', {
         /* Le niveau d'entretien est un nombre entre 1 et 3 */
         allowNull: true
         /* Le niveau d'entretien est optionnel */
+    },
+    category: {
+        type: DataTypes.STRING,
+        /* La catégorie de la plante ex: fruits, légumes, intérieur */
+        allowNull: true
+        /* La catégorie est optionnelle */
     }
 })
 
