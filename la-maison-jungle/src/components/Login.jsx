@@ -5,12 +5,15 @@
 /**                                                                                             **/
 /*************************************************************************************************/
 
+
+/*ici j'importe useState pour gerer le changement de valeur */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 /* On importe useNavigate pour rediriger l'utilisateur */
 
 const Login = (props) => {
     /* On reçoit les props envoyées depuis App.jsx */
+    /**pour stocker les valeurs des champs de formulaire mon useState est vide */
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -26,7 +29,7 @@ const Login = (props) => {
         })
         .then((response) => response.json())
         .then((data) => {
-            /* On affiche les données reçues dans la console pour déboguer */
+            /* On affiche les données reçues dans la console pour débuguer */
             console.log('data reçu :', data)
             if (data.message === 'Connexion réussie !') {
                 /* On stocke l'utilisateur connecté dans App.jsx via props */

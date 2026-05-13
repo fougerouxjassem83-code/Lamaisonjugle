@@ -6,6 +6,16 @@
 /**                                                                                             **/
 /*************************************************************************************************/
 
+/***************************************************************************/
+/* ICI J'AI IMPORTÉ TOUS LES COMPOSANTS NÉCESSAIRES POUR L'APPLICATION    */
+/***************************************************************************/
+
+import Categories from './components/Categories'
+/* On importe le composant Categories depuis le dossier components */
+
+import SearchBar from './components/SearchBar'
+/* On importe le composant SearchBar */
+
 import { useState, useEffect } from 'react'
 /* On importe les Hooks useState et useEffect depuis React */
 
@@ -42,6 +52,8 @@ import Welcome from './components/Welcome'
 import LandingPage from './components/LandingPage'
 /* On importe le composant LandingPage */
 
+/*************************************************************************************/
+
 function App() {
   /* On crée un état pour stocker les plantes récupérées depuis l'API */
   const [plants, setPlants] = useState([])
@@ -56,7 +68,15 @@ function App() {
      null = personne n'est connecté */
   const [user, setUser] = useState(null)
 
-  /* Au chargement de la page on récupère les plantes depuis l'API */
+  /* On crée un état pour stocker la recherche */
+  const [search, setSearch] = useState('')
+
+  /* On crée un état pour stocker la catégorie sélectionnée
+     Toutes = toutes les catégories par défaut */
+  const [category, setCategory] = useState('Toutes')
+
+  /* Au chargement de la page on récupère les plantes depuis l'API grace a la fonction fetch
+  on récupère les données au format JSON depuis la base de données */
   useEffect(() => {
     fetch('http://localhost:3000/plants')
       .then((response) => response.json())
@@ -85,6 +105,17 @@ function App() {
   /* On calcule le total du panier */
   const total = cart.reduce((acc, plant) => acc + plant.price, 0)
 
+  /* On filtre les plantes selon la recherche ET la catégorie
+     toLowerCase() permet de ne pas tenir compte des majuscules */
+  const filteredPlants = plants.filter((plant) => {
+    /* On filtre par nom */
+    const matchSearch = plant.name.toLowerCase().includes(search.toLowerCase())
+    /* On filtre par catégorie */
+    const matchCategory = category === 'Toutes' || plant.category === category
+    /* On retourne les plantes qui correspondent aux deux filtres */
+    return matchSearch && matchCategory
+  })
+
   return (
     <>
       {/* On affiche la navbar sur toutes les pages
@@ -108,6 +139,15 @@ function App() {
               {/* On affiche la bannière en haut de la page */}
               <Banner title="La maison jungle" slogan="Chez vous, partout et ailleurs" />
 
+              {/* On affiche la barre de recherche
+                  onSearch met à jour l'état search */}
+              <SearchBar onSearch={setSearch} />
+
+              {/* On affiche les boutons de catégories
+                  onSelect met à jour l'état category
+                  selected est la catégorie actuellement sélectionnée */}
+              <Categories onSelect={setCategory} selected={category} />
+
               {/* Rendu conditionnel : on affiche le panier si showCart est true */}
               {showCart && (
                 <Cart
@@ -118,9 +158,9 @@ function App() {
                 />
               )}
 
-              {/* On affiche la liste des plantes */}
+              {/* On affiche les plantes filtrées selon la recherche et la catégorie */}
               <div className="shopping-list">
-                {plants.map((plant) => (
+                {filteredPlants.map((plant) => (
                   <PlantItem
                     key={plant.id}
                     name={plant.name}

@@ -23,7 +23,7 @@ const Navbar = (props) => {
                             🛒 Panier ({props.cartCount})
                         </button>
                         {/* On affiche le nom de l'utilisateur connecté */}
-                        <span className="navbar-user">👋 Bonjour {props.user} !</span>
+                       
                         {/* Bouton de déconnexion */}
                         <button onClick={props.onLogout}>Se déconnecter</button>
                     </>

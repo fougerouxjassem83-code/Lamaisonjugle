@@ -14,6 +14,7 @@ const Footer = () => {
             <p>Laissez-nous votre mail :</p>
             {/* On affiche l'input */}
             <input type="email" placeholder="Entrez votre mail" />
+            <input type="submit" value="Envoyer" />
         </footer>
     );
 };
